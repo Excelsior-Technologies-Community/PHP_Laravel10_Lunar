@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::middleware(['web', 'auth:staff'])->group(function () {
+    Route::get('/export-products', [ExportController::class, 'export'])->name('export.products');
+
+    Route::get('/admin-tools', function () {
+        return view('admin-tools');
+    })->name('admin.tools');
 });
